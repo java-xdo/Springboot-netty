@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.udp.mapper.VoltmeterMapper">
+	<resultMap id="BaseResultMap"
+		type="com.qs.udp.pojo.Voltmeter">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="message" jdbcType="VARCHAR" property="message" />
+	</resultMap>
+
+
+
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select id,message,name
+
+		from
+		voltmeter
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from voltmeter
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.qs.udp.pojo.Voltmeter">
+		insert into voltmeter (
+		name,
+		message
+		)
+		values (
+		#{name,jdbcType=VARCHAR},
+		#{message,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateByPrimaryKey">
+		update voltmeter
+		set
+		name =
+		#{name,jdbcType=VARCHAR},
+		message =
+		#{message,jdbcType=VARCHAR}
+		where id
+		= #{id,jdbcType=INTEGER}
+
+	</update>
+
+
+</mapper>
