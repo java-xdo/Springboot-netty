@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.udp.mapper.ServiceMapper">
+	<resultMap id="BaseResultMap"
+		type="com.qs.udp.pojo.ServicePojo">
+		<id column="status" jdbcType="BOOLEAN" property="status" />
+		<result column="port" jdbcType="INTEGER" property="port" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+	</resultMap>
+
+
+
+
+	<select id="findService" resultMap="BaseResultMap">
+		SELECT a.type,a.port,a.status
+		FROM service a
+	</select>
+
+
+
+</mapper>

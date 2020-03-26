@@ -1,11 +1,16 @@
 package com.qs.udp.start;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.qs.udp.pojo.ServicePojo;
+import com.qs.udp.service.ServicesService;
 import com.qs.udp.voltmeter.controller.ChineseProverbServer;
 
 /**
@@ -15,17 +20,36 @@ import com.qs.udp.voltmeter.controller.ChineseProverbServer;
 @Order(value = 2)
 public class StartService implements ApplicationRunner {
 
-	@Value("${voltmeterPort}")
-	private String voltmeterPort;
+	@Autowired
+	ServicesService servicesService;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		// 获取配置文件端口号
-		System.out.println("电表upd服务开始启动启动，端口号为：" + voltmeterPort);
-		int port = Integer.valueOf(voltmeterPort);
-		ChineseProverbServer cps = new ChineseProverbServer();
-		cps.run(port);
+		// 从数据库中查询应该启动的服务端口
 
+		List<ServicePojo> list = servicesService.findService();
+		List portList = StartService.getPort(list);
+		ChineseProverbServer cps = new ChineseProverbServer();
+		System.out.println("电表upd服务开始启动启动");
+		
+		cps.run(portList);
+		
+	}
+
+	public  static List<Integer> getPort(List<ServicePojo> list) {
+		List<Integer> postList = new ArrayList();
+		int port;
+		boolean status;
+		for (int i = 0; i < list.size(); i++) {
+			status = list.get(i).isStatus();
+			if (status) {
+				port = list.get(i).getPort();
+				postList.add(port);
+			}
+
+		}
+		System.out.println(postList.toString());
+		return postList;
 	}
 
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.udp.mapper.DeviceBasicMapper">
+	<resultMap id="BaseResultMap"
+		type="com.qs.udp.pojo.DeviceBasicPojo">
+
+		<result column="id" jdbcType="BIGINT" property="id" />
+
+	</resultMap>
+
+
+
+	<!-- 根据设备标识码获取设备id -->
+	<select id="findDeviceBasicId" resultMap="BaseResultMap">
+		SELECT id FROM
+		device_basic a WHERE a.device_num=#{deviceNum}
+	</select>
+	
+	<!-- 根据设备id获取设备唯一标识码 -->
+	<select id="findDeviceBasicNum" resultMap="BaseResultMap">
+		SELECT device_num FROM
+		device_basic a WHERE a.id=#{id}
+	</select>
+
+
+
+</mapper>

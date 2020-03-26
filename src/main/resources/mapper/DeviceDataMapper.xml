@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.udp.mapper.DeviceDataMapper">
+
+
+	<insert id="insertDeviceDataValue">
+	
+	
+	
+	
+		INSERT INTO device_data
+		(device_basic_id,collect_key,VALUE,device_original_oata_id)
+		VALUES (
+		#{deviceBasicId},
+		#{collect_key},
+		#{value},
+		#{deviceOriginalOateId}
+		)
+	</insert>
+
+
+
+</mapper>

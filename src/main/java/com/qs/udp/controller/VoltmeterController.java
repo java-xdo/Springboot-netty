@@ -1,17 +1,19 @@
 package com.qs.udp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
+import com.qs.udp.pojo.DeviceBasicPojo;
 import com.qs.udp.pojo.Voltmeter;
-import com.qs.udp.pojo.VoltmeterControllerPojo;
+import com.qs.udp.service.DeviceBasicService;
+import com.qs.udp.service.DeviceStatusService;
 import com.qs.udp.service.VoltmeterService;
-import com.qs.udp.voltmeter.controller.ChineseProverbServerHandler;
+import com.qs.udp.systematic.common.VoltmeterControllerPojo;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.socket.DatagramPacket;
@@ -27,17 +29,12 @@ public class VoltmeterController {
 
 	@Autowired
 	VoltmeterService voltmeterService;
-	// 定义的电表端口号
-	@Value("${voltmeterPort}")
-	private String voltmeterPort;
 
-	// @PostMapping(value = "/test")
-	@ResponseBody
-	@RequestMapping("/test")
-	public Object test() {
-		System.out.println(voltmeterPort);
-		return voltmeterPort;
-	}
+	@Autowired
+	DeviceStatusService deviceStatusService;
+
+	@Autowired
+	DeviceBasicService deviceBasicService;
 
 	@PostMapping(value = "/deleteByPrimaryKey")
 	public Object deleteByPrimaryKey(int id) {
@@ -59,9 +56,9 @@ public class VoltmeterController {
 		return voltmeterService.updateByPrimaryKey(record);
 	}
 
-	// 对电表的控制命令
+	// 对电表的控制命令state:状态，time上传周期；deviceBasicId设备id
 	@PostMapping(value = "/voltmeterEquipmentControl")
-	public Object voltmeterController(String state, String time) throws Exception {
+	public Object voltmeterController(String state, String time, String deviceBasicId) throws Exception {
 		JsonObject object = new JsonObject();
 
 		if (state != null && state != "") {
@@ -72,9 +69,19 @@ public class VoltmeterController {
 		}
 		String content = object.toString();// 组织发送的内容
 
-		VoltmeterControllerPojo.map.get("myctx")
-				.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8),
-						VoltmeterControllerPojo.map1.get("myPacket").sender()));
+		// 根据设备唯一标识码，读取设备id
+		Long id = Long.parseLong(deviceBasicId);
+		List<DeviceBasicPojo> listBasicNum = deviceBasicService.findDeviceBasicNum(id);
+
+		if (listBasicNum.size() > 0) {
+			String BasicNum = listBasicNum.get(0).getDevice_num();
+
+			VoltmeterControllerPojo.map.get(BasicNum)
+					.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8),
+							VoltmeterControllerPojo.map1.get(BasicNum).sender()));
+			int status = Integer.parseInt(state);// 设备当前状态
+			 deviceStatusService.updateDeviceStatus(status, Long.parseLong(deviceBasicId));
+		}
 
 		return content;
 	}
