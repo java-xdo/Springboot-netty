@@ -9,8 +9,8 @@
 	<update id="updateDeviceStatus">
 
 		UPDATE device_status SET STATUS = #{status} WHERE
-		device_basic_id =
-		#{deviceBasicId}
+		gather_key =
+		#{gatherKey}
 
 
 	</update>

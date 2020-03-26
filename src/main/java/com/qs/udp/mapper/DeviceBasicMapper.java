@@ -10,4 +10,7 @@ public interface DeviceBasicMapper {
 	
 	List<DeviceBasicPojo> findDeviceBasicNum(Long id);
 	
+	
+	List<DeviceBasicPojo> findGatherKey(String deviceNum);//根据设备设备标识码，获取设备唯一标识即：gatherkey
+	
 }

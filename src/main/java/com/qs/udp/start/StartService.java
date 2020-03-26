@@ -35,7 +35,7 @@ public class StartService implements ApplicationRunner {
 		cps.run(portList);
 		
 	}
-
+	//拼接端口数据
 	public  static List<Integer> getPort(List<ServicePojo> list) {
 		List<Integer> postList = new ArrayList();
 		int port;

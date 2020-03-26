@@ -58,7 +58,7 @@ public class VoltmeterController {
 
 	// 对电表的控制命令state:状态，time上传周期；deviceBasicId设备id
 	@PostMapping(value = "/voltmeterEquipmentControl")
-	public Object voltmeterController(String state, String time, String deviceBasicId) throws Exception {
+	public Object voltmeterController(String state, String time, String gatherKey) throws Exception {
 		JsonObject object = new JsonObject();
 
 		if (state != null && state != "") {
@@ -69,19 +69,14 @@ public class VoltmeterController {
 		}
 		String content = object.toString();// 组织发送的内容
 
-		// 根据设备唯一标识码，读取设备id
-		Long id = Long.parseLong(deviceBasicId);
-		List<DeviceBasicPojo> listBasicNum = deviceBasicService.findDeviceBasicNum(id);
+		
 
-		if (listBasicNum.size() > 0) {
-			String BasicNum = listBasicNum.get(0).getDevice_num();
-
-			VoltmeterControllerPojo.map.get(BasicNum)
+			VoltmeterControllerPojo.map.get(gatherKey)
 					.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8),
-							VoltmeterControllerPojo.map1.get(BasicNum).sender()));
+							VoltmeterControllerPojo.map1.get(gatherKey).sender()));
 			int status = Integer.parseInt(state);// 设备当前状态
-			 deviceStatusService.updateDeviceStatus(status, Long.parseLong(deviceBasicId));
-		}
+			 deviceStatusService.updateDeviceStatus(status, gatherKey);
+		
 
 		return content;
 	}

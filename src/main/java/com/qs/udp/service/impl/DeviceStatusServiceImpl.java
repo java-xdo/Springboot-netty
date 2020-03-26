@@ -14,9 +14,9 @@ public class DeviceStatusServiceImpl implements DeviceStatusService {
 	private DeviceStatusMapper deviceStatusMapper;
 
 	@Override
-	public int updateDeviceStatus(int status, Long deviceBasicId) {
+	public int updateDeviceStatus(int status, String gatherKey) {
 		// TODO Auto-generated method stub
-		return deviceStatusMapper.updateDeviceStatus(status, deviceBasicId);
+		return deviceStatusMapper.updateDeviceStatus(status, gatherKey);
 	}
 
 }

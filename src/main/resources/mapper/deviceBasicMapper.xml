@@ -5,6 +5,7 @@
 		type="com.qs.udp.pojo.DeviceBasicPojo">
 
 		<result column="id" jdbcType="BIGINT" property="id" />
+		<result column="gather_key" jdbcType="VARCHAR" property="gather_key" />
 
 	</resultMap>
 
@@ -20,6 +21,13 @@
 	<select id="findDeviceBasicNum" resultMap="BaseResultMap">
 		SELECT device_num FROM
 		device_basic a WHERE a.id=#{id}
+	</select>
+	
+	
+	<!-- 根据设备设备标识码，获取设备唯一标识即：gatherkey -->
+	<select id="findGatherKey" resultMap="BaseResultMap">
+		SELECT gather_key FROM
+		device_basic a WHERE a.device_num=#{deviceNum}
 	</select>
 
 

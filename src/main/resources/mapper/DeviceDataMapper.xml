@@ -9,9 +9,9 @@
 	
 	
 		INSERT INTO device_data
-		(device_basic_id,collect_key,VALUE,device_original_oata_id)
+		(gather_key,collect_key,VALUE,device_original_oata_id)
 		VALUES (
-		#{deviceBasicId},
+		#{gatherKey},
 		#{collect_key},
 		#{value},
 		#{deviceOriginalOateId}

@@ -2,7 +2,7 @@ package com.qs.udp.mapper;
 
 public interface DeviceStatusMapper {
 
-	int updateDeviceStatus (int status,Long deviceBasicId);
+	int updateDeviceStatus (int status,String gatherKey);
 
 	
 }

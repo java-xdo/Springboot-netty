@@ -95,6 +95,14 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.6.Final</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j 根据汉字转化成对应的英文 -->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

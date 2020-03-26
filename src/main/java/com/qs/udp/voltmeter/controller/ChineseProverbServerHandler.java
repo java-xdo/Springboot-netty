@@ -44,14 +44,16 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 	public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
 		// 将参数存入系统变量中，方便通过http请求获取，
 		String req = packet.content().toString(CharsetUtil.UTF_8);// 通过content()来获取消息内容
-		//将json转化map
+		// 将json转化map
 		Gson gson = new Gson();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = gson.fromJson(req, map.getClass());
-		
-		String deviceNum = map.get("dkey").toString();
-		VoltmeterControllerPojo.map.put(deviceNum, ctx);
-		VoltmeterControllerPojo.map1.put(deviceNum, packet);
+
+		String deviceNum = map.get("dkey").toString();// 代替换为gatherkey
+		String gatherKey = getGatherKey(deviceNum);
+
+		VoltmeterControllerPojo.map.put(gatherKey, ctx);
+		VoltmeterControllerPojo.map1.put(gatherKey, packet);
 		// 将获取到的消息，转化成map
 
 		processingData(Constants.ELECTRIC_ENERGY_METER, req);// 处理设备原始数据
@@ -82,32 +84,35 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 			Map<String, Object> map = new HashMap<String, Object>();
 			map = gson.fromJson(req, map.getClass());
 			String deviceNum = map.get("dkey").toString();
-
-			// Long deviceBasicId = 869975030499233L;
-			List<DeviceBasicPojo> listDeviceBasic = chineseProverbServerHandler.deviceBasicMapper
-					.findDeviceBasicId(deviceNum);// 获取设备id
-
-			Long deviceBasicId = listDeviceBasic.get(0).getId();
+			String gatherKey = getGatherKey(deviceNum);
 			// 获取主键
 			IdWorker iw1 = new IdWorker();
 			long id = iw1.nextId();
 			// 判断是否查找到设备
-			if (listDeviceBasic.size() > 0) {
-				chineseProverbServerHandler.DeviceOriginalOataService.insertDeviceOriginalOataValue(id, deviceBasicId,
-						req);
-				if (req.length() > 50) {
 
-					AnalyticalData(Constants.ELECTRIC_ENERGY_METER, map, id, deviceBasicId);
-				}
+			chineseProverbServerHandler.DeviceOriginalOataService.insertDeviceOriginalOataValue(id, gatherKey, req);// 原始报文数据插入
+			if (req.length() > 50) {
+
+				AnalyticalData(Constants.ELECTRIC_ENERGY_METER, map, id, gatherKey);
 			}
+
 		}
 	}
 
 	// 处理解析后的数据 type:哪个协议，map：接收到的Sting数据转换成map，deviceOriginalOateId：原始数据id
-	public void AnalyticalData(int type, Map<String, Object> map, long deviceOriginalOateId, long deviceBasicId) {
+	public void AnalyticalData(int type, Map<String, Object> map, long deviceOriginalOateId, String gatherKey) {
 
 		String HC = map.get("HC").toString();// 存历史电量
-		chineseProverbServerHandler.deviceDataMapper.insertDeviceDataValue(deviceBasicId, "HC", HC,
-				deviceOriginalOateId);
+		chineseProverbServerHandler.deviceDataMapper.insertDeviceDataValue(gatherKey, "HC", HC, deviceOriginalOateId);
+	}
+
+	public String getGatherKey(String deviceNum) {
+		String gatherKey = "";
+		List<DeviceBasicPojo> listGatherKey = chineseProverbServerHandler.deviceBasicMapper.findGatherKey(deviceNum);// 从数据库中获取设备gatherkey，待优化为redis
+
+		if (listGatherKey.size() > 0) {
+			gatherKey = listGatherKey.get(0).getGather_key();
+		}
+		return gatherKey;
 	}
 }

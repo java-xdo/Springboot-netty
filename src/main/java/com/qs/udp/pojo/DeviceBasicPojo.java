@@ -7,7 +7,21 @@ public class DeviceBasicPojo {
 	
 	private String device_num;
 	
+	private String gather_key;
 	
+	
+	
+	
+
+	
+
+	public String getGather_key() {
+		return gather_key;
+	}
+
+	public void setGather_key(String gather_key) {
+		this.gather_key = gather_key;
+	}
 
 	public String getDevice_num() {
 		return device_num;
