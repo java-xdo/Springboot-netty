@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.qs.udp.mapper.DeviceBasicMapper;
 import com.qs.udp.mapper.DeviceDataMapper;
 import com.qs.udp.pojo.DeviceBasicPojo;
+import com.qs.udp.redis.util.RedisUtil;
 import com.qs.udp.service.DeviceOriginalOataService;
 import com.qs.udp.systematic.common.Constants;
 import com.qs.udp.systematic.common.VoltmeterControllerPojo;
@@ -54,7 +55,7 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 
 		VoltmeterControllerPojo.map.put(gatherKey, ctx);
 		VoltmeterControllerPojo.map1.put(gatherKey, packet);
-		// 将获取到的消息，转化成map
+	
 
 		processingData(Constants.ELECTRIC_ENERGY_METER, req);// 处理设备原始数据
 		// DeviceOriginalOataService.insertDeviceOriginalOataValue(deviceBasicId, req);
@@ -88,7 +89,6 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 			// 获取主键
 			IdWorker iw1 = new IdWorker();
 			long id = iw1.nextId();
-			// 判断是否查找到设备
 
 			chineseProverbServerHandler.DeviceOriginalOataService.insertDeviceOriginalOataValue(id, gatherKey, req);// 原始报文数据插入
 			if (req.length() > 50) {
@@ -107,12 +107,14 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 	}
 
 	public String getGatherKey(String deviceNum) {
-		String gatherKey = "";
-		List<DeviceBasicPojo> listGatherKey = chineseProverbServerHandler.deviceBasicMapper.findGatherKey(deviceNum);// 从数据库中获取设备gatherkey，待优化为redis
+	
+		String gatherKey = RedisUtil.getValue(deviceNum);
 
-		if (listGatherKey.size() > 0) {
-			gatherKey = listGatherKey.get(0).getGather_key();
+		if(gatherKey!=null) {
+			return gatherKey;
+		}else {
+			return "";
 		}
-		return gatherKey;
+		
 	}
 }
