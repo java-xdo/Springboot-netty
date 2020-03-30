@@ -6,7 +6,7 @@ import com.qs.udp.pojo.ServicePojo;
 
 public interface ServiceMapper {
 
-	List<ServicePojo> findService();
+	List<ServicePojo> findService(String port);
 
 	
 }

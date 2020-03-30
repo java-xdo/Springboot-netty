@@ -26,17 +26,18 @@ public class StartService implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		// 从数据库中查询应该启动的服务端口
-
-		List<ServicePojo> list = servicesService.findService();
+		String port = "";
+		List<ServicePojo> list = servicesService.findService(port);
 		List portList = StartService.getPort(list);
 		ChineseProverbServer cps = new ChineseProverbServer();
 		System.out.println("电表upd服务开始启动启动");
-		
+
 		cps.run(portList);
-		
+
 	}
-	//拼接端口数据
-	public  static List<Integer> getPort(List<ServicePojo> list) {
+
+	// 拼接端口数据
+	public static List<Integer> getPort(List<ServicePojo> list) {
 		List<Integer> postList = new ArrayList();
 		int port;
 		boolean status;

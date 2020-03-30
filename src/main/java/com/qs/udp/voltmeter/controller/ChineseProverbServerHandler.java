@@ -28,15 +28,12 @@ import io.netty.util.CharsetUtil;
 @Component
 public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
-	static Map<String, Object> map = new HashMap<String, Object>();
 	// 用来注入bean
 	public static ChineseProverbServerHandler chineseProverbServerHandler;
 
 	@Autowired
 	private DeviceOriginalOataService DeviceOriginalOataService;
 
-	@Autowired
-	private DeviceBasicMapper deviceBasicMapper;
 
 	@Autowired
 	private DeviceDataMapper deviceDataMapper;

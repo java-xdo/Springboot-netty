@@ -44,4 +44,14 @@ public class ChineseProverbServer {
 		List<Integer> ports = Arrays.asList(8080, 8081);
 		 new ChineseProverbServer().run(ports);
 	}
+	
+	public String runPort(int port) throws InterruptedException {
+		EventLoopGroup group = new NioEventLoopGroup();
+		Bootstrap b = new Bootstrap();
+		
+		b.group(group).channel(NioDatagramChannel.class).option(ChannelOption.SO_BROADCAST, true)// 支持广播
+				.handler(new ChineseProverbServerHandler());// ChineseProverbServerHandler是业务处理类
+		b.bind(port).sync().channel().closeFuture().await();
+		return "ok";
+	}
 }

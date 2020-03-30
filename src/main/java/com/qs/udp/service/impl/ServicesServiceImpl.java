@@ -17,9 +17,9 @@ public class ServicesServiceImpl implements ServicesService {
 	private ServiceMapper serviceMapper;
 
 	@Override
-	public List<ServicePojo> findService() {
+	public List<ServicePojo> findService(String port) {
 		// TODO Auto-generated method stub
-		return serviceMapper.findService();
+		return serviceMapper.findService(port);
 	}
 
 
