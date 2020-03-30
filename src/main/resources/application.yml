@@ -5,10 +5,10 @@ redisPort: 6379
 #rabbitmq配置
 spring:
    rabbitmq:
-      host: 127.0.0.1
+      host: 129.28.159.43
       port: 5672
       username: admin
-      password: 123456
+      password: admin
       publisher-confirms: true #  消息发送到交换机确认机制,是否确认回调
       publisher-returns: true
    devtools:

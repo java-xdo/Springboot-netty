@@ -15,10 +15,10 @@ public class FirstConsumer {
 	 * 
 	 * @param message
 	 */
-	@RabbitListener(queues = { "pay_money" })
-	public void handleMessage(Message message) {
-		// 处理消息
-		System.out.println("我是消费者，我收到的消息为：" + message);
-	}
+//	@RabbitListener(queues = { "pay_money" })
+//	public void handleMessage(Message message) {
+//		// 处理消息
+//		System.out.println("我是消费者，我收到的消息为：" + message);
+//	}
 
 }
