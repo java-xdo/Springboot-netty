@@ -1,10 +1,16 @@
 package com.qs.udp.redis.util;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+@Component
 public final class RedisUtil {
+
+	
 
 	// Redis服务器IP
 	private static String ADDR = "129.28.159.43";

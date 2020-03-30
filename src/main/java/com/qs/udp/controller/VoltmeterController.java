@@ -69,14 +69,11 @@ public class VoltmeterController {
 		}
 		String content = object.toString();// 组织发送的内容
 
-		
-
-			VoltmeterControllerPojo.map.get(gatherKey)
-					.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8),
-							VoltmeterControllerPojo.map1.get(gatherKey).sender()));
-			int status = Integer.parseInt(state);// 设备当前状态
-			 deviceStatusService.updateDeviceStatus(status, gatherKey);
-		
+		VoltmeterControllerPojo.map.get(gatherKey)
+				.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8),
+						VoltmeterControllerPojo.map1.get(gatherKey).sender()));
+		int status = Integer.parseInt(state);// 设备当前状态
+		deviceStatusService.updateDeviceStatus(status, gatherKey);
 
 		return content;
 	}

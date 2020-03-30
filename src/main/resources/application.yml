@@ -1,0 +1,3 @@
+redisAddr: 129.28.159.43
+redisPassword: 123456
+redisPort: 6379
