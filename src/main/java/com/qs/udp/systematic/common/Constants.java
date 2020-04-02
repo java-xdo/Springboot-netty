@@ -13,4 +13,8 @@ public class Constants {
 	 * 或者{"dkey":"869975030499233","pkey":"DDS"}Electric energy meter
 	 * */
 	public static final int ELECTRIC_ENERGY_METER = 0001;
+	/*
+	 * 水表：北京慧怡
+	 * */
+	public static final int WATER_METER = 0002;
 }

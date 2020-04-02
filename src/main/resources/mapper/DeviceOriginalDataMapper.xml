@@ -7,7 +7,7 @@
 
 	<insert id="insertDeviceOriginalOataValue">
 		insert into
-		device_original_oata(id,gather_key,up_data)
+		device_original_data(id,gather_key,up_data)
 		values (
 		#{id},
 		#{gatherKey},

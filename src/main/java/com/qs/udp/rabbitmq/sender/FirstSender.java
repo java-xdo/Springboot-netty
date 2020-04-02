@@ -1,6 +1,5 @@
 package com.qs.udp.rabbitmq.sender;
 
-
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class FirstSender {
 	/**
 	 * 发送消息
 	 * 
-	 * @param gatherkey，设备唯一标识
+	 * @param         gatherkey，设备唯一标识
 	 * @param message 消息
 	 */
 	public void send(String gatherkey, Object message) {

@@ -21,7 +21,7 @@ public class ChineseProverbServer {
 		for (int port : ports) {
 			Bootstrap b = new Bootstrap();
 			b.group(group).channel(NioDatagramChannel.class).option(ChannelOption.SO_BROADCAST, true)// 支持广播
-					.handler(new ChineseProverbServerHandler());// ChineseProverbServerHandler是业务处理类
+					.handler(new ChineseProverbServerHandler()).handler(new TimeServerHandler());// ChineseProverbServerHandler是业务处理类
 
 			Channel serverChannel = b.bind(port).sync().channel();
 			channels.add(serverChannel);

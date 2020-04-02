@@ -7,8 +7,8 @@ spring:
    rabbitmq:
       host: 129.28.159.43
       port: 5672
-      username: admin
-      password: admin
+      username: xdo
+      password: 123456
       publisher-confirms: true #  消息发送到交换机确认机制,是否确认回调
       publisher-returns: true
    devtools:

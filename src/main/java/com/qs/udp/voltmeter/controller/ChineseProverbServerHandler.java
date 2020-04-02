@@ -42,6 +42,7 @@ public class ChineseProverbServerHandler extends SimpleChannelInboundHandler<Dat
 	public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
 		// 将参数存入系统变量中，方便通过http请求获取，
 		String req = packet.content().toString(CharsetUtil.UTF_8);// 通过content()来获取消息内容
+		System.out.println("设备回执消息：" + req);
 		// 将json转化map
 		Gson gson = new Gson();
 		Map<String, Object> map = new HashMap<String, Object>();
