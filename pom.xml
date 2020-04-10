@@ -105,7 +105,7 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>4.1.6.Final</version>
+			<version>4.1.42.Final</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j 根据汉字转化成对应的英文 -->
