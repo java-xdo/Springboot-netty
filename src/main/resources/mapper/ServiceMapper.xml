@@ -12,12 +12,13 @@
 
 
 	<select id="findService" resultMap="BaseResultMap">
-		SELECT a.type,a.port,a.status
-		FROM service a
+		SELECT b.status,b.port ,a.agreement_type AS TYPE FROM pri_agreement a
+		LEFT JOIN service b
+		ON a.id = b.pri_agreement_id
 		<where>
 			0 = 0
 			<if test="port != null and port != ''">
-				AND a.port = #{port}
+				AND b.port = #{port}
 			</if>
 		</where>
 	</select>

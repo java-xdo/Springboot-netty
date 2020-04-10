@@ -8,7 +8,7 @@ import java.util.Random;
  * <b>对系统时间的依赖性非常强，需要关闭ntp的时间同步功能，或者当检测到ntp时间调整后，拒绝分配id。
  * 
  * @author 邢单欧
- * @date 2012-2-26 下午6:40:28
+ * 
  */
 public class IdWorker {
 
@@ -30,7 +30,7 @@ public class IdWorker {
 		long min = 1;
 		long max = 1023;
 		long workerId = min + (((long) (new Random().nextDouble() * (max - min))));
-		
+
 		if (workerId > this.maxWorkerId || workerId < 0) {// workid < 1024[10位：2的10次方]
 			throw new IllegalArgumentException(
 					String.format("worker Id can't be greater than %d or less than 0", this.maxWorkerId));
@@ -86,11 +86,11 @@ public class IdWorker {
 	}
 
 	public static void main(String[] args) throws Exception {
-		
+
 		for (int i = 0; i < 10000; i++) {
 			IdWorker iw1 = new IdWorker();
 			System.out.println(iw1.nextId());
 		}
-		
+
 	}
 }

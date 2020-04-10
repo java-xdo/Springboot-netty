@@ -1,11 +1,11 @@
-redisAddr: 129.28.159.43
+redisAddr: 127.0.0.1
 redisPassword: 123456
 redisPort: 6379
 
 #rabbitmq配置
 spring:
    rabbitmq:
-      host: 129.28.159.43
+      host: localhost
       port: 5672
       username: xdo
       password: 123456

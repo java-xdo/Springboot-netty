@@ -3,7 +3,8 @@ package com.qs.udp.pojo;
 public class ServicePojo {
 	private boolean status;
 	private int port;
-	private String type;
+	private String type; //协议类型
+	
 	public boolean isStatus() {
 		return status;
 	}

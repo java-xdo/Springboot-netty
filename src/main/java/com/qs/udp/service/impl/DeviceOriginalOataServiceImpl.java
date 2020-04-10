@@ -14,9 +14,9 @@ public class DeviceOriginalOataServiceImpl implements DeviceOriginalOataService 
 	private DeviceOriginalOataMapper deviceOriginalOataMapper;
 
 	@Override
-	public int insertDeviceOriginalOataValue(long id,String gatherKey, String upData) {
+	public int insertDeviceOriginalOataValue(int tableName,long id,String gatherKey, String upData) {
 		// TODO Auto-generated method stub
-		return deviceOriginalOataMapper.insertDeviceOriginalOataValue(id,gatherKey, upData);
+		return deviceOriginalOataMapper.insertDeviceOriginalOataValue(tableName,id,gatherKey, upData);
 	}
 
 

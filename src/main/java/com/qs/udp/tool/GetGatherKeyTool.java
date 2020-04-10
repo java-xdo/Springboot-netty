@@ -36,7 +36,7 @@ public class GetGatherKeyTool {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getGatherKey("求实科技有限公司","HC","UDP","1"));
+		System.out.println(getGatherKey("北京慧怡科技有限公司","MC","UDP","2"));
 	}
 
 }
